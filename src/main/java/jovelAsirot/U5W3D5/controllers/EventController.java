@@ -31,7 +31,7 @@ public class EventController {
 
     @PutMapping("/{eventId}")
     @PreAuthorize("hasAuthority('ORGANIZER')")
-    public Event updateEvent(@PathVariable Long eventId, @RequestBody Event updatedEvent) {
+    public Event updateEvent(@PathVariable Long eventId, @RequestBody EventDTO updatedEvent) {
         return eventService.updateById(eventId, updatedEvent);
     }
 
@@ -41,5 +41,5 @@ public class EventController {
     public void deleteEvent(@PathVariable Long eventId) {
         eventService.deleteById(eventId);
     }
-    
+
 }

@@ -11,14 +11,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class EventService {
 
     @Autowired
     private EventDAO eDAO;
 
+    @Autowired
+    private UserService userService;
+
     public Event save(EventDTO payload) {
-        Event event = new Event(payload.title(), payload.description(), payload.date(), payload.location(), payload.availableSeats());
+
+        Event event = new Event(payload.title(), payload.description(), LocalDate.parse(payload.date()), payload.location(), payload.availableSeats());
 
         return eDAO.save(event);
     }
@@ -33,14 +39,14 @@ public class EventService {
         return this.eDAO.findAll(pageable);
     }
 
-    public Event updateById(Long eventId, Event updatedEvent) {
+    public Event updateById(Long eventId, EventDTO updatedEvent) {
         Event eventFound = this.findById(eventId);
 
-        eventFound.setTitle(updatedEvent.getTitle());
-        eventFound.setDescription(updatedEvent.getDescription());
-        eventFound.setDateTime(updatedEvent.getDateTime());
-        eventFound.setLocation(updatedEvent.getLocation());
-        eventFound.setAvailableSeats(updatedEvent.getAvailableSeats());
+        eventFound.setTitle(updatedEvent.title());
+        eventFound.setDescription(updatedEvent.description());
+        eventFound.setDateTime(LocalDate.parse(updatedEvent.date()));
+        eventFound.setLocation(updatedEvent.location());
+        eventFound.setAvailableSeats(updatedEvent.availableSeats());
 
 
         return this.eDAO.save(eventFound);
