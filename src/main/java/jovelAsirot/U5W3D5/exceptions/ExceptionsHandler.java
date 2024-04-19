@@ -45,7 +45,7 @@ public class ExceptionsHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleUnexpected(UnexpectedTypeException ex) {
         ex.printStackTrace();
-        return new ErrorResponseDTO("Choose a role MODERATOR or USER", LocalDateTime.now());
+        return new ErrorResponseDTO(ex.getMessage(), LocalDateTime.now());
     }
 
     @ExceptionHandler(UnauthorizedException.class)
@@ -54,8 +54,15 @@ public class ExceptionsHandler {
         return new ErrorResponseDTO(ex.getMessage(), LocalDateTime.now());
     }
 
+    @ExceptionHandler(AccessDeniedExceptionCustom.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponseDTO handleAccessDenied(AccessDeniedExceptionCustom ex) {
+        return new ErrorResponseDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsPayLoad handleGenericErrors(Exception ex) {
         ex.printStackTrace();
         return new ErrorsPayLoad("Error server side", LocalDateTime.now());
