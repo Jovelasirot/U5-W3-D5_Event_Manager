@@ -5,8 +5,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jovelAsirot.U5W3D5.entities.User;
-import jovelAsirot.U5W3D5.enums.Role;
-import jovelAsirot.U5W3D5.exceptions.AccessDeniedExceptionCustom;
 import jovelAsirot.U5W3D5.exceptions.UnauthorizedException;
 import jovelAsirot.U5W3D5.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.nio.file.AccessDeniedException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -43,9 +40,6 @@ public class JwtFilter extends OncePerRequestFilter {
         String id = jwtTools.extractIdFromToken(accessToken);
         User userFound = this.userService.findById(Long.valueOf(id));
 
-        if (userFound.getRole()  != Role.ORGANIZER) {
-            throw new AccessDeniedExceptionCustom("You do not have permission to access this resource");
-        }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(userFound, null, userFound.getAuthorities());
 

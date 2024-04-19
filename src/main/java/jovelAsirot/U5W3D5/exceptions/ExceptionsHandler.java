@@ -4,6 +4,7 @@ package jovelAsirot.U5W3D5.exceptions;
 import jakarta.validation.UnexpectedTypeException;
 import jovelAsirot.U5W3D5.payloads.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -54,18 +55,17 @@ public class ExceptionsHandler {
         return new ErrorResponseDTO(ex.getMessage(), LocalDateTime.now());
     }
 
-    @ExceptionHandler(AccessDeniedExceptionCustom.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponseDTO handleAccessDenied(AccessDeniedExceptionCustom ex) {
-        return new ErrorResponseDTO(ex.getMessage(), LocalDateTime.now());
-    }
-
-
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsPayLoad handleGenericErrors(Exception ex) {
         ex.printStackTrace();
         return new ErrorsPayLoad("Error server side", LocalDateTime.now());
     }
-    
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponseDTO handleAccessDenied(AccessDeniedException ex) {
+        return new ErrorResponseDTO("You don't have the permission to access the resource", LocalDateTime.now());
+    }
+
 }
