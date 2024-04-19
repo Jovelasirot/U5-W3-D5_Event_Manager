@@ -52,6 +52,7 @@ public class EventService {
         return this.eDAO.save(eventFound);
     }
 
+
     public void deleteById(Long eventId) {
         Event eventFound = this.findById(eventId);
 

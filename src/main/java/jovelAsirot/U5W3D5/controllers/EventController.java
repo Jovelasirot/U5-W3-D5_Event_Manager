@@ -42,4 +42,5 @@ public class EventController {
         eventService.deleteById(eventId);
     }
 
+  
 }
