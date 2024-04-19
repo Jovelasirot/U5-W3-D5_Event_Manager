@@ -1,5 +1,6 @@
 package jovelAsirot.U5W3D5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Event {
     private int availableSeats;
 
     @OneToMany(mappedBy = "event")
+    @JsonIgnore
     private List<Booking> bookings;
 
     public Event(String title, String description, LocalDate dateTime, String location, int availableSeats) {

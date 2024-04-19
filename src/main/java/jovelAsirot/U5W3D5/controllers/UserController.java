@@ -45,11 +45,6 @@ public class UserController {
         return this.userService.findById(userId);
     }
 
-    @PutMapping("/{userId}")
-    @PreAuthorize("hasAuthority('ORGANIZER')")
-    public User findByIdAndUpdate(@PathVariable Long userId, @RequestBody User body) {
-        return this.userService.updateById(userId, body);
-    }
 
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasAuthority('ORGANIZER')")
@@ -57,5 +52,5 @@ public class UserController {
     public void findByIdAndDelete(@PathVariable Long userId) {
         this.userService.deleteById(userId);
     }
-    
+
 }

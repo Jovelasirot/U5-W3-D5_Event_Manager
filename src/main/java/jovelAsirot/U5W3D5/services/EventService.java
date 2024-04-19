@@ -1,6 +1,7 @@
 package jovelAsirot.U5W3D5.services;
 
 import jovelAsirot.U5W3D5.entities.Event;
+import jovelAsirot.U5W3D5.exceptions.BadRequestException;
 import jovelAsirot.U5W3D5.exceptions.NotFoundException;
 import jovelAsirot.U5W3D5.payloads.EventDTO;
 import jovelAsirot.U5W3D5.repositories.EventDAO;
@@ -50,6 +51,22 @@ public class EventService {
 
 
         return this.eDAO.save(eventFound);
+    }
+
+    public void updateSeats(Long eventId) {
+        Event eventFound = this.findById(eventId);
+
+        eventFound.setTitle(eventFound.getTitle());
+        eventFound.setDescription(eventFound.getDescription());
+        eventFound.setDateTime(eventFound.getDateTime());
+        eventFound.setLocation(eventFound.getLocation());
+
+        if (eventFound.getAvailableSeats() <= 0) {
+            throw new BadRequestException("The event is no longer available");
+        }
+        eventFound.setAvailableSeats(eventFound.getAvailableSeats() - 1);
+
+        this.eDAO.save(eventFound);
     }
 
 
