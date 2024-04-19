@@ -15,6 +15,6 @@ public record UserDTO(@NotEmpty(message = "The name is required")
                       @Size(min = 8, message = "The password can't be less than eight characters characters")
                       String password,
                       @NotNull(message = "The role is required")
-                      @Pattern(regexp = "ORGANIZER|USER", message = "Invalid role, choose between ORGANIZER or USER")
+                      @Pattern(regexp = "ORGANIZER|USER", message = "Invalid role input, choose between ORGANIZER or USER")
                       String role) {
 }

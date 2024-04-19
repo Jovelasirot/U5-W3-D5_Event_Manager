@@ -64,8 +64,8 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponseDTO handleAccessDenied(AccessDeniedException ex) {
-        return new ErrorResponseDTO("You don't have the permission to access the resource", LocalDateTime.now());
+    public ErrorsPayLoad handleAccessDenied(AccessDeniedException ex) {
+        return new ErrorsPayLoad("You don't have the permission to access the resource", LocalDateTime.now());
     }
 
 }

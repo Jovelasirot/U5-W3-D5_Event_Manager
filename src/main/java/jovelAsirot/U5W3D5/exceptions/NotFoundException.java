@@ -8,4 +8,5 @@ public class NotFoundException extends RuntimeException {
     public NotFoundException(String email) {
         super("The email: " + email + " was not found");
     }
+
 }
